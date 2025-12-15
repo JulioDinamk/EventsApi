@@ -8,7 +8,6 @@ use App\Http\Resources\ApiClientResource;
 use App\Models\ApiClient;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;

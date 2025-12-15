@@ -4,11 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserSituation;
-use App\Models\ApiClient;
 use App\Models\Event;
-use App\Models\ManagerPayment;
-use App\Models\ManagerProduct;
-use App\Models\ManagerRegister;
 use App\Models\ManagerRegistersEvent;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +51,6 @@ class CheckUserInformation extends Controller
             ])
             ->select(['id_register', 'id_event'])
             ->first();
-
 
         if (!$userEventRelation) return response()->json([
             'message' => "O usuário não foi encontrado para o email ou CPF fornecidos."
