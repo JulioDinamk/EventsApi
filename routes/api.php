@@ -8,8 +8,8 @@ use App\Http\Middleware\CheckInternalApiKey;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('internal')->middleware(CheckInternalApiKey::class)->group(function () {
-    Route::post('/provision/client', ProvisionApiClient::class);
-    Route::get('/client/{id}', ShowApiClient::class);
+    Route::post('provision/client', ProvisionApiClient::class);
+    Route::get('client/{id}', ShowApiClient::class);
 });
 
 Route::prefix('v1')->group(function () {
