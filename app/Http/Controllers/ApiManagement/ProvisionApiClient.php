@@ -38,9 +38,10 @@ class ProvisionApiClient extends Controller
         ]);
 
         $client->events()->attach($events);
-        $token = $client->createToken('event-access-token')->plainTextToken;
+//        $token = $client->createToken('event-access-token')->plainTextToken;
         $client->load('events');
-        $clientResource = new ApiClientResource($client);
-        return response()->json($clientResource->toArray($request), Response::HTTP_CREATED);
+        return (new ApiClientResource($client))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 }

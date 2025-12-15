@@ -21,6 +21,8 @@ class ShowApiClient extends Controller
         $client = ApiClient::query()->with('events')->find($id);
 
         if (!$client) return response()->json(['message' => 'Cliente não encontrado.'], Response::HTTP_NOT_FOUND);
-        return new ApiClientResource($client);
+        return (new ApiClientResource($client))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 }
