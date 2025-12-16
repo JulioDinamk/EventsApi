@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\External;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\AuthCustomer;
+use App\Http\Resources\External\AuthCustomerResource;
 use App\Models\ApiClient;
-use App\Http\Requests\Client\AuthenticateClient as AuthenticateClientRequest;
-use App\Http\Resources\AuthenticateClient as AuthenticateClientResource;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticateClient extends Controller
+class AuthenticateCustomer extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(AuthenticateClientRequest $authenticateClient)
+    public function __invoke(AuthCustomer $authenticateClient)
     {
         $client = ApiClient::query()->where('email', $authenticateClient->email)->first();
 
@@ -26,7 +23,7 @@ class AuthenticateClient extends Controller
         $token = $client->createToken('auth-token', ['*'])->plainTextToken;
         $client->load('events');
 
-        return (new AuthenticateClientResource($client, $token))
+        return (new AuthCustomerResource($client, $token))
             ->response()
             ->setStatusCode(Response::HTTP_OK);
 

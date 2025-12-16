@@ -1,12 +1,19 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\External;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApiClientResource extends JsonResource
+class AuthCustomerResource extends JsonResource
 {
+    public string $plainTextToken;
+
+    public function __construct($resource, string $token)
+    {
+        parent::__construct($resource);
+        $this->plainTextToken = $token;
+    }
     /**
      * Transform the resource into an array.
      *
@@ -15,14 +22,13 @@ class ApiClientResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'access_token' => $this->plainTextToken,
+            'token_type' => 'Bearer',
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-            'last_updated' => $this->updated_at->format('Y-m-d H:i:s'),
             'events_access' => [
                 'total_events_linked' => $this->whenLoaded('events', fn () => $this->events->count()),
-                'event_uuids' => $this->whenLoaded('events', fn () => $this->events->pluck('id_uuid')),
             ],
         ];
     }

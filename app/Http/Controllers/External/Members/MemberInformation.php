@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\External\Members;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserSituation;
+use App\Http\Resources\External\MemberInfoResource;
 use App\Models\Event;
 use App\Models\ManagerRegistersEvent;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckUserInformation extends Controller
+class MemberInformation extends Controller
 {
+
     /**
-     * Handle the incoming request.
+     * Busca as informações de um usuário (register) do evento fornecido.
+     * @param Request $request
+     * @param string $eventUuid
+     * @return JsonResponse
      */
     public function __invoke(Request $request, string $eventUuid)
     {
@@ -22,9 +27,7 @@ class CheckUserInformation extends Controller
         if (!$event) return response()->json(['message' => 'Evento não reconhecido.'], Response::HTTP_NOT_FOUND);
 
         $authenticatedClient->load('events');
-        $hasPermission = $authenticatedClient->events()
-            ->where('event_id', $event->id_event)
-            ->exists();
+        $hasPermission = $authenticatedClient->events()->where('event_id', $event->id_event)->exists();
 
         if (!$hasPermission) return response()->json([
             'message' => "Acesso negado. O seu token não possui permissão para o evento: {$eventUuid}."
@@ -56,7 +59,7 @@ class CheckUserInformation extends Controller
             'message' => "O usuário não foi encontrado para o email ou CPF fornecidos."
         ], Response::HTTP_BAD_REQUEST);
 
-        return (new UserSituation($userEventRelation))->response()->setStatusCode(Response::HTTP_OK);
+        return (new MemberInfoResource($userEventRelation))->response()->setStatusCode(Response::HTTP_OK);
 
     }
 }

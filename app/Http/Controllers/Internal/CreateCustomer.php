@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\ApiManagement;
+namespace App\Http\Controllers\Internal;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Internal\CreateClient;
-use App\Http\Resources\ApiClientResource;
+use App\Http\Requests\Internal\CreateCustomer as CreateRequest ;
+use App\Http\Resources\Internal\CustomerResource;
 use App\Models\ApiClient;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
@@ -13,14 +13,14 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProvisionApiClient extends Controller
+class CreateCustomer extends Controller
 {
     /**
      * Cria um novo cliente API vinculando aos eventos fornecidos.
-     * @param CreateClient $request
+     * @param CreateRequest $request
      * @return JsonResponse
      */
-    public function __invoke(CreateClient $request): JsonResponse
+    public function __invoke(CreateRequest $request): JsonResponse
     {
         $events = Event::query()->whereIn('id_uuid', $request->input('event_uuids'))->pluck('id_event');
 
@@ -39,7 +39,7 @@ class ProvisionApiClient extends Controller
         $client->events()->attach($events);
 //        $token = $client->createToken('event-access-token')->plainTextToken;
         $client->load('events');
-        return (new ApiClientResource($client))
+        return (new CustomerResource($client))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }

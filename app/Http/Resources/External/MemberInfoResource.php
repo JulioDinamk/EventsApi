@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\External;
 
 use App\Enums\PaymentStatus;
 use App\Utils\JsonHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserSituation extends JsonResource
+class MemberInfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

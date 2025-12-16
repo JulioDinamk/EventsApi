@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Internal;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthenticateClient extends FormRequest
+class CreateCustomer extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,11 @@ class AuthenticateClient extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:api_clients,email',
+            'event_uuids' => 'required|array|min:1',
+            'event_uuids.*' => 'required|uuid',
+            'password' => 'nullable|string|min:8',
         ];
     }
 }
