@@ -22,7 +22,7 @@ class CustomerResource extends JsonResource
             'last_updated' => $this->updated_at->format('Y-m-d H:i:s'),
             'events_access' => [
                 'total_events_linked' => $this->whenLoaded('events', fn () => $this->events->count()),
-                'event_uuids' => $this->whenLoaded('events', fn () => $this->events->pluck('id_uuid')),
+                'event_uuids' => $this->whenLoaded('events', fn () => $this->events->pluck('id_uuid', 'id_event')),
             ],
         ];
     }

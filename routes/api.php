@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\External\AuthenticateCustomer;
+use App\Http\Controllers\External\CustomerChangePassword;
 use App\Http\Controllers\External\CustomerEvents;
 use App\Http\Controllers\External\Members\MemberInformation;
 use App\Http\Controllers\Internal\AddEvent;
@@ -24,7 +25,10 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+    /* EP de ação do cliente */
     Route::get('events', CustomerEvents::class);
+    Route::patch('change-password', CustomerChangePassword::class);
 
+    /* EP de consulta de dados */
     Route::get('user/{eventUuid}', MemberInformation::class);
 });
