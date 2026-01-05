@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\External\AuthenticateCustomer;
+use App\Http\Controllers\External\CustomerEvents;
 use App\Http\Controllers\External\Members\MemberInformation;
 use App\Http\Controllers\Internal\AddEvent;
 use App\Http\Controllers\Internal\CreateCustomer;
@@ -23,5 +24,7 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
-   Route::get('user/{eventUuid}', MemberInformation::class);
+    Route::get('events', CustomerEvents::class);
+
+    Route::get('user/{eventUuid}', MemberInformation::class);
 });
