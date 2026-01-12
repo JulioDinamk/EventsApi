@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\External\MemberInfoResource;
 use App\Models\Event;
 use App\Models\ManagerRegistersEvent;
+use Dedoc\Scramble\Attributes\Endpoint;
+use Dedoc\Scramble\Attributes\Group;
+use Dedoc\Scramble\Attributes\PathParameter;
+use Dedoc\Scramble\Attributes\QueryParameter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,12 +17,26 @@ use Symfony\Component\HttpFoundation\Response;
 class MemberInformation extends Controller
 {
 
-    /**
-     * Busca as informações de um usuário (register) do evento fornecido.
-     * @param Request $request
-     * @param string $eventUuid
-     * @return JsonResponse
-     */
+    #[Group('Members')]
+    #[Endpoint(
+        title: 'Member Search',
+        description: 'Recupera informações detalhadas sobre um inscrito (participante) registrado para um evento específico.
+         Este endpoint permite buscar dados do inscrito, incluindo informações pessoais, detalhes de registro e status de pagamento.',
+    )]
+
+    #[PathParameter(
+        name: 'eventUuid',
+        description: 'O identificador exclusivo (UUID) do evento para o qual você deseja recuperar as informações do inscrito'
+    )]
+    #[QueryParameter(
+        name: 'cpf',
+        description: 'Filtra inscritos por CPF (Cadastro de Pessoa Física, documento de identificação fiscal brasileiro).
+        Use para encontrar um inscrito específico por seu número de documento (APENAS NUMEROS)'
+    )]
+    #[QueryParameter(
+        name: 'email',
+        description: 'Filtra inscritos por endereço de e-mail. Use para encontrar um inscrito específico por seu e-mail'
+    )]
     public function __invoke(Request $request, string $eventUuid)
     {
         $authenticatedClient = $request->user();
