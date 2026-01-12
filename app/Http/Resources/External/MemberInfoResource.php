@@ -29,6 +29,8 @@ class MemberInfoResource extends JsonResource
             'name' => $this->user->name,
             'email' => $this->user->email,
             'document' => $this->user->doc,
+            'accredited' => $this->accredited,
+            'accredited_date' => $this->accredited_time,
             'payment' => [
                 'category' => $categoryData,
                 'status' => match (true) {

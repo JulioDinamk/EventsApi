@@ -52,7 +52,7 @@ class MemberInformation extends Controller
                     ->where('id_event', $event->id_event)
                     ->with('product:id_product,title')
             ])
-            ->select(['id_register', 'id_event'])
+            ->select(['id_register', 'id_event', 'accredited', 'accredited_time'])
             ->first();
 
         if (!$userEventRelation) return response()->json([
