@@ -23,6 +23,7 @@ jobs:
             **
             !app/**
             !resources/**
+            !config/**
             !routes/**
             !public/css/**
             !public/js/**
