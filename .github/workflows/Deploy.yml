@@ -1,0 +1,28 @@
+name: 🚀 Deploy API (FTP)
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  web-deploy:
+    name: 🚚 Deploy para ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 📂 Sincronizando Ambiente Principal
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.PROD_SERVER }}
+          username: ${{ secrets.PROD_USER  }}
+          password: ${{ secrets.PROD_PASS }}
+          server-dir: ./
+          exclude: |
+            **
+            !app/**
+            !resources/**
+            !routes/**
+            !public/css/**
+            !public/js/**

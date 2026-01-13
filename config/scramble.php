@@ -11,11 +11,11 @@ return [
         'description' => '',
     ],
     'ui' => [
-        'title' => null,
+        'title' => 'Dinamk - API Events',
         'theme' => 'light',
-        'hide_try_it' => false,
-        'hide_schemas' => false,
-        'logo' => '',
+        'hide_try_it' => true,
+        'hide_schemas' => true,
+        'logo' => env('APP_URL').'/storage/images/logodnk.png',
         'try_it_credentials_policy' => 'include',
 
         /*
