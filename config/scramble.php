@@ -12,7 +12,7 @@ return [
     ],
     'ui' => [
         'title' => 'Dinamk - API Events',
-        'theme' => 'dark',
+        'theme' => 'light',
         'hide_try_it' => true,
         'hide_schemas' => true,
         'logo' => env('APP_URL').'/storage/images/logodnk.png',
