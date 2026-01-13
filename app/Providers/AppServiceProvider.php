@@ -22,7 +22,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Scramble::registerApi('v1', ['info' => ['title' => 'API Customer V1']])
+        Scramble::registerApi('v1', [
+            'info' => [
+                'version' => env('API_VERSION', '0.0.1'),
+                'description' => '',
+            ],
+        ])
             ->routes(function (Route $route) {
                 return Str::startsWith($route->uri, 'v1/');
             })
