@@ -37,7 +37,7 @@ class MemberInfoResource extends JsonResource
                     $this->payment->pay === 8 => PaymentStatus::EXEMPT->label(),
                     $this->payment->status === PaymentStatus::RETURNED => PaymentStatus::PAID->label(),
                     default => $this->payment->status?->label(),
-                } : 'Pending',
+                } : 'Open',
             ],
         ];
     }
