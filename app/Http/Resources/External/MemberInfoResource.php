@@ -33,11 +33,11 @@ class MemberInfoResource extends JsonResource
             'accredited_date' => $this->accredited_time,
             'payment' => [
                 'category' => $categoryData,
-                'status' => match (true) {
+                'status' => $this->payment ? match (true) {
                     $this->payment->pay === 8 => PaymentStatus::EXEMPT->label(),
                     $this->payment->status === PaymentStatus::RETURNED => PaymentStatus::PAID->label(),
-                    default => $this->payment->status->label(),
-                },
+                    default => $this->payment->status?->label(),
+                } : 'Pending',
             ],
         ];
     }
